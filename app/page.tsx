@@ -22,6 +22,7 @@ import {
   Zap,
   Rocket,
   Brain,
+  CheckCircle,
 } from "lucide-react"
 import { useRouter } from "next/navigation"
 
@@ -420,6 +421,8 @@ function SakuraText({ children, className = "" }: { children: string; className?
 export default function HomePage() {
   const [mounted, setMounted] = useState(false)
   const [showContactModal, setShowContactModal] = useState(false)
+  const [showPaymentModal, setShowPaymentModal] = useState(false)
+  const [paid, setPaid] = useState(false)
   const router = useRouter()
 
   const scrollToContact = (e: React.MouseEvent) => {
@@ -970,7 +973,7 @@ export default function HomePage() {
                       ))}
                     </ul>
 
-                    <MagneticButton variant={pkg.popular ? "primary" : "secondary"} className="w-full" onClick={() => router.push('/payment')}>
+                    <MagneticButton variant={pkg.popular ? "primary" : "secondary"} className="w-full" onClick={() => setShowPaymentModal(true)}>
                       Get Started
                       <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-2 transition-transform" />
                     </MagneticButton>
@@ -1215,6 +1218,86 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Payment Modal */}
+      {showPaymentModal && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl p-8 max-w-md w-full relative animate-fade-in-up">
+            <button
+              onClick={() => { setShowPaymentModal(false); setPaid(false); }}
+              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+            <h2 className="text-3xl font-bold mb-6 text-center bg-gradient-to-r from-gray-800 to-pink-600 bg-clip-text text-transparent">
+              Payment
+            </h2>
+            {paid ? (
+              <div className="flex flex-col items-center justify-center">
+                <CheckCircle className="w-16 h-16 text-green-500 mb-4" />
+                <div className="text-2xl font-bold text-green-600 mb-2">Payment Successful!</div>
+                <div className="text-gray-600 text-center">Thank you for your purchase. We will contact you soon.</div>
+              </div>
+            ) : (
+              <form
+                className="space-y-6"
+                onSubmit={e => {
+                  e.preventDefault()
+                  setPaid(true)
+                }}
+              >
+                <div>
+                  <label htmlFor="card" className="block text-sm font-medium text-gray-700 mb-1">
+                    Card Number
+                  </label>
+                  <input
+                    type="text"
+                    id="card"
+                    required
+                    maxLength={19}
+                    pattern="[0-9 ]{19}"
+                    className="w-full px-4 py-2 rounded-lg border border-pink-200 focus:border-pink-400 focus:ring-2 focus:ring-pink-200 focus:outline-none transition-all duration-300"
+                    placeholder="1234 5678 9012 3456"
+                  />
+                </div>
+                <div className="flex gap-4">
+                  <div className="flex-1">
+                    <label htmlFor="expiry" className="block text-sm font-medium text-gray-700 mb-1">
+                      Expiry
+                    </label>
+                    <input
+                      type="text"
+                      id="expiry"
+                      required
+                      maxLength={5}
+                      pattern="[0-9/]{5}"
+                      className="w-full px-4 py-2 rounded-lg border border-pink-200 focus:border-pink-400 focus:ring-2 focus:ring-pink-200 focus:outline-none transition-all duration-300"
+                      placeholder="MM/YY"
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <label htmlFor="cvc" className="block text-sm font-medium text-gray-700 mb-1">
+                      CVC
+                    </label>
+                    <input
+                      type="text"
+                      id="cvc"
+                      required
+                      maxLength={3}
+                      pattern="[0-9]{3}"
+                      className="w-full px-4 py-2 rounded-lg border border-pink-200 focus:border-pink-400 focus:ring-2 focus:ring-pink-200 focus:outline-none transition-all duration-300"
+                      placeholder="123"
+                    />
+                  </div>
+                </div>
+                <MagneticButton className="w-full text-lg py-3">Pay Now</MagneticButton>
+              </form>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   )
 }
