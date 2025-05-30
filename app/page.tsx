@@ -23,6 +23,7 @@ import {
   Rocket,
   Brain,
 } from "lucide-react"
+import { useRouter } from "next/navigation"
 
 // Sakura Petals Effect Component
 function SakuraPetalsEffect() {
@@ -418,10 +419,19 @@ function SakuraText({ children, className = "" }: { children: string; className?
 
 export default function HomePage() {
   const [mounted, setMounted] = useState(false)
+  const [showContactModal, setShowContactModal] = useState(false)
+  const router = useRouter()
+
+  const scrollToContact = (e: React.MouseEvent) => {
+    e.preventDefault()
+    const contactSection = document.getElementById('contact')
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
 
   useEffect(() => {
     setMounted(true)
-
     return () => {}
   }, [])
 
@@ -429,6 +439,94 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-pink-50 via-rose-50 to-pink-100 text-gray-800 overflow-x-hidden relative">
+      {/* Contact Modal */}
+      {showContactModal && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl p-8 max-w-md w-full relative animate-fade-in-up">
+            <button
+              onClick={() => setShowContactModal(false)}
+              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+            <div className="text-center mb-6">
+              <h3 className="text-2xl font-bold bg-gradient-to-r from-gray-800 to-pink-600 bg-clip-text text-transparent mb-2">
+                Contact Evolar
+              </h3>
+              <p className="text-gray-600">Get in touch with our team</p>
+            </div>
+            <div className="space-y-4">
+              <div className="flex items-center space-x-3">
+                <div className="w-10 h-10 bg-gradient-to-r from-pink-400 to-rose-400 rounded-lg flex items-center justify-center">
+                  <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  </svg>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-500">Email</p>
+                  <a href="mailto:contact@evolar.com" className="text-gray-800 hover:text-pink-600 transition-colors">
+                    contact@evolar.com
+                  </a>
+                </div>
+              </div>
+              <div className="flex items-center space-x-3">
+                <div className="w-10 h-10 bg-gradient-to-r from-pink-400 to-rose-400 rounded-lg flex items-center justify-center">
+                  <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                  </svg>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-500">Phone</p>
+                  <a href="tel:+1234567890" className="text-gray-800 hover:text-pink-600 transition-colors">
+                    +1 (234) 567-890
+                  </a>
+                </div>
+              </div>
+              <div className="flex items-center space-x-3">
+                <div className="w-10 h-10 bg-gradient-to-r from-pink-400 to-rose-400 rounded-lg flex items-center justify-center">
+                  <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-500">Location</p>
+                  <p className="text-gray-800">123 Blockchain Street, Web3 City, 10001</p>
+                </div>
+              </div>
+            </div>
+            <div className="mt-8 flex justify-center space-x-4">
+              <a
+                href="#"
+                className="w-10 h-10 bg-gradient-to-r from-pink-400 to-rose-400 rounded-lg flex items-center justify-center text-white hover:scale-110 transition-transform"
+              >
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                </svg>
+              </a>
+              <a
+                href="#"
+                className="w-10 h-10 bg-gradient-to-r from-pink-400 to-rose-400 rounded-lg flex items-center justify-center text-white hover:scale-110 transition-transform"
+              >
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z" />
+                </svg>
+              </a>
+              <a
+                href="#"
+                className="w-10 h-10 bg-gradient-to-r from-pink-400 to-rose-400 rounded-lg flex items-center justify-center text-white hover:scale-110 transition-transform"
+              >
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Sakura Petals Effect */}
       <SakuraPetalsEffect />
 
@@ -468,21 +566,24 @@ export default function HomePage() {
       </div>
 
       {/* Header */}
-      <header className="relative z-50 bg-white/80 backdrop-blur-xl border-b border-pink-200/50">
+      <header className="relative z-50 bg-white/80 border-b border-pink-200/50">
         <div className="container mx-auto px-6 py-6">
           <div className="flex items-center justify-between">
             {/* Logo */}
             <AnimatedCard direction="left">
-              <div className="flex items-center space-x-3 group">
+              <div className="flex items-center group">
                 <div className="relative">
-                  <div className="w-10 h-10 bg-gradient-to-r from-pink-400 via-rose-400 to-pink-500 rounded-xl flex items-center justify-center group-hover:rotate-180 transition-transform duration-500">
-                    <span className="text-white font-bold text-lg">L</span>
+                  <div className="w-12 h-12 bg-gradient-to-r from-pink-400 via-rose-400 to-pink-500 rounded-xl flex items-center justify-center group-hover:rotate-180 transition-transform duration-500">
+                    <span className="text-white font-bold text-xl">E</span>
                   </div>
                   <div className="absolute inset-0 bg-gradient-to-r from-pink-400 via-rose-400 to-pink-500 rounded-xl blur-lg opacity-50 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </div>
-                <SakuraText className="text-2xl font-bold bg-gradient-to-r from-gray-800 to-pink-600 bg-clip-text text-transparent">
-                  Labrys
-                </SakuraText>
+                <div className="relative overflow-hidden ml-2">
+                  <span className="text-3xl font-black bg-gradient-to-r from-gray-800 to-pink-600 bg-clip-text text-transparent group-hover:scale-110 transition-transform duration-500 tracking-tight inline-block animate-fade-in-up">
+                    EVOLAR
+                  </span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-pink-400/20 to-rose-400/20 blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                </div>
               </div>
             </AnimatedCard>
 
@@ -492,7 +593,8 @@ export default function HomePage() {
                 {["Services", "Contact"].map((item, index) => (
                   <Link
                     key={item}
-                    href={`#${item.toLowerCase()}`}
+                    href={item === "Contact" ? "#" : `#${item.toLowerCase()}`}
+                    onClick={item === "Contact" ? (e) => { e.preventDefault(); setShowContactModal(true); } : undefined}
                     className="text-gray-600 hover:text-pink-600 transition-all duration-300 hover:scale-110 relative group"
                     style={{ animationDelay: `${index * 100}ms` }}
                   >
@@ -500,7 +602,7 @@ export default function HomePage() {
                     <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-pink-400 to-rose-400 group-hover:w-full transition-all duration-300"></span>
                   </Link>
                 ))}
-                <MagneticButton className="text-sm">
+                <MagneticButton className="text-sm" onClick={scrollToContact}>
                   Get Started
                   <Sparkles className="ml-2 h-4 w-4" />
                 </MagneticButton>
@@ -572,13 +674,9 @@ export default function HomePage() {
             {/* CTA Buttons */}
             <AnimatedCard delay={1200}>
               <div className="flex flex-col sm:flex-row gap-6 justify-center mb-16">
-                <MagneticButton className="text-lg">
+                <MagneticButton className="text-lg" onClick={scrollToContact}>
                   <Rocket className="mr-2 h-5 w-5" />
                   Start Your Project
-                </MagneticButton>
-                <MagneticButton variant="secondary" className="text-lg">
-                  View Our Work
-                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
                 </MagneticButton>
               </div>
             </AnimatedCard>
@@ -586,7 +684,16 @@ export default function HomePage() {
             {/* Scroll Indicator */}
             <AnimatedCard delay={1400}>
               <div>
-                <ChevronDown className="w-8 h-8 text-pink-400 mx-auto" />
+                <ChevronDown
+                  className="w-8 h-8 text-pink-400 mx-auto cursor-pointer hover:scale-125 transition-transform duration-300"
+                  onClick={() => {
+                    const el = document.getElementById('why-consulting');
+                    if (el) {
+                      const y = el.getBoundingClientRect().top + window.pageYOffset - 227;
+                      window.scrollTo({ top: y, behavior: 'smooth' });
+                    }
+                  }}
+                />
               </div>
             </AnimatedCard>
           </div>
@@ -605,7 +712,7 @@ export default function HomePage() {
             ].map((stat, index) => (
               <Card
                 key={index}
-                className="group bg-white/60 border border-pink-200/50 backdrop-blur-xl hover:bg-white/80 transition-all duration-700 hover:scale-125 hover:shadow-2xl hover:shadow-pink-400/30 hover:-translate-y-8 hover:rotate-3 cursor-pointer"
+                className="group bg-white/60 border border-pink-200/50 hover:bg-white/80 transition-all duration-700 hover:scale-125 hover:shadow-2xl hover:shadow-pink-400/30 hover:-translate-y-8 hover:rotate-3 cursor-pointer"
               >
                 <CardContent className="p-6 text-center">
                   <div
@@ -633,26 +740,29 @@ export default function HomePage() {
         <div className="w-full flex items-center justify-center">
           <div className="w-full max-w-7xl px-6">
             <AnimatedCard>
-              <div className="w-full flex flex-col items-center justify-center text-center mb-20">
-                <Badge className="bg-gradient-to-r from-pink-400/20 to-rose-400/20 border border-pink-400/30 text-pink-700 px-6 py-2 mb-6 hover:scale-110 transition-all duration-300">
-                  <Brain className="w-4 h-4 mr-2" />
-                  Our Expertise
+              {/* Attractive Consulting Block */}
+              <div id="why-consulting" className="w-full flex flex-col items-center justify-center text-center mb-12">
+                <Badge className="bg-gradient-to-r from-pink-400/20 to-rose-400/20 border border-pink-400/30 text-pink-700 px-6 py-2 mb-4 hover:scale-110 transition-all duration-300">
+                  <Shield className="w-4 h-4 mr-2" />
+                  Consulting Excellence
                 </Badge>
-                <div className="flex flex-col items-center justify-center">
-                  <h2 className="text-5xl lg:text-6xl font-bold mb-6 text-center">
-                    <div className="flex flex-col items-center justify-center">
-                      <SakuraText className="bg-gradient-to-r from-gray-800 to-pink-600 bg-clip-text text-transparent text-center group-hover:scale-110 transition-transform duration-500">
-                        End-to-End
-                      </SakuraText>
-                      <span className="bg-gradient-to-r from-pink-500 to-rose-500 bg-clip-text text-transparent text-center group-hover:scale-110 transition-transform duration-500">
-                        Web3 Solutions
-                      </span>
-                    </div>
-                  </h2>
+                <h3 className="text-4xl font-extrabold bg-gradient-to-r from-gray-800 to-pink-600 bg-clip-text text-transparent mb-4 animate-fade-in-up">
+                  Why Choose Evolar for Consulting?
+                </h3>
+                <div className="flex flex-col sm:flex-row gap-6 justify-center mt-2">
+                  <div className="flex items-center gap-3 bg-white/70 border border-pink-200/50 rounded-xl px-5 py-3 shadow hover:shadow-pink-200/40 transition-all duration-300 animate-fade-in-up">
+                    <Sparkles className="w-6 h-6 text-pink-500" />
+                    <span className="text-lg font-semibold text-gray-800">Proven Web3 Expertise</span>
+                  </div>
+                  <div className="flex items-center gap-3 bg-white/70 border border-pink-200/50 rounded-xl px-5 py-3 shadow hover:shadow-pink-200/40 transition-all duration-300 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+                    <Shield className="w-6 h-6 text-rose-500" />
+                    <span className="text-lg font-semibold text-gray-800">Enterprise-Grade Security</span>
+                  </div>
+                  <div className="flex items-center gap-3 bg-white/70 border border-pink-200/50 rounded-xl px-5 py-3 shadow hover:shadow-pink-200/40 transition-all duration-300 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+                    <Rocket className="w-6 h-6 text-pink-400" />
+                    <span className="text-lg font-semibold text-gray-800">End-to-End Blockchain Solutions</span>
+                  </div>
                 </div>
-                <p className="text-xl text-gray-600 max-w-3xl mx-auto group-hover:text-gray-800 transition-colors duration-300">
-                  From concept to deployment, we deliver cutting-edge blockchain technology that drives innovation
-                </p>
               </div>
             </AnimatedCard>
 
@@ -682,8 +792,8 @@ export default function HomePage() {
                 {
                   icon: Shield,
                   title: "Blockchain Consulting",
-                  description: "Strategic guidance on blockchain adoption and Web3 transformation",
-                  features: ["Technology Assessment", "Strategy Planning", "Implementation"],
+                  description: "Strategic guidance for Web3 transformation",
+                  features: ["Tech Assessment", "Strategy", "Implementation"],
                   gradient: "from-rose-500 to-pink-600",
                 },
                 {
@@ -703,7 +813,7 @@ export default function HomePage() {
               ].map((service, index) => (
                 <Card
                   key={index}
-                  className="group bg-white/60 border border-pink-200/50 backdrop-blur-xl hover:bg-white/80 transition-all duration-1000 hover:scale-110 hover:shadow-2xl hover:shadow-pink-400/30 hover:-translate-y-8 hover:rotate-2 cursor-pointer overflow-hidden relative"
+                  className="group bg-white/60 border border-pink-200/50 hover:bg-white/80 transition-all duration-1000 hover:scale-110 hover:shadow-2xl hover:shadow-pink-400/30 hover:-translate-y-8 hover:rotate-2 cursor-pointer overflow-hidden relative"
                 >
                   {/* Animated Background */}
                   <div
@@ -712,7 +822,7 @@ export default function HomePage() {
 
                   <CardContent className="p-8 relative z-10 text-center">
                     <div
-                      className={`w-16 h-16 bg-gradient-to-r ${service.gradient} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-150 group-hover:rotate-180 transition-all duration-700 mx-auto`}
+                      className={`w-16 h-16 bg-gradient-to-r ${service.gradient} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-150 ${service.title === 'DeFi Protocol Development' ? 'group-hover:rotate-[360deg]' : 'group-hover:rotate-180'} transition-all duration-700 mx-auto`}
                     >
                       <service.icon className="w-8 h-8 text-white" />
                     </div>
@@ -800,7 +910,7 @@ export default function HomePage() {
               ].map((pkg, index) => (
                 <Card
                   key={index}
-                  className={`relative bg-white/60 border backdrop-blur-xl transition-all duration-1000 hover:scale-105 hover:shadow-2xl hover:-translate-y-8 hover:rotate-2 cursor-pointer group overflow-hidden ${
+                  className={`relative bg-white/60 border border-pink-200/50 hover:bg-white/80 transition-all duration-1000 hover:scale-105 hover:shadow-2xl hover:-translate-y-8 hover:rotate-2 cursor-pointer group overflow-hidden ${
                     pkg.popular ? "border-pink-400 shadow-pink-400/20" : "border-pink-200/50 hover:border-pink-400/50"
                   }`}
                 >
@@ -825,7 +935,7 @@ export default function HomePage() {
                       >
                         <span className="text-2xl font-bold text-white">{pkg.name}</span>
                       </div>
-                      <h3 className="text-2xl font-bold mb-2 text-gray-800 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-pink-500 group-hover:to-rose-500 group-hover:bg-clip-text transition-all duration-300">
+                      <h3 className="text-2xl font-bold mb-2 text-gray-800 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-pink-500 group-hover:to-rose-500 group-hover:bg-clip-text transition-all duration-500 text-center">
                         {pkg.subtitle}
                       </h3>
                       <div
@@ -860,7 +970,7 @@ export default function HomePage() {
                       ))}
                     </ul>
 
-                    <MagneticButton variant={pkg.popular ? "primary" : "secondary"} className="w-full">
+                    <MagneticButton variant={pkg.popular ? "primary" : "secondary"} className="w-full" onClick={() => router.push('/payment')}>
                       Get Started
                       <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-2 transition-transform" />
                     </MagneticButton>
@@ -917,7 +1027,7 @@ export default function HomePage() {
               ].map((testimonial, index) => (
                 <Card
                   key={index}
-                  className="group bg-white/60 border border-pink-200/50 backdrop-blur-xl hover:bg-white/80 transition-all duration-1000 hover:scale-110 hover:shadow-2xl hover:shadow-pink-400/30 hover:-translate-y-8 hover:-rotate-2 cursor-pointer overflow-hidden relative"
+                  className="group bg-white/60 border border-pink-200/50 hover:bg-white/80 transition-all duration-1000 hover:scale-110 hover:shadow-2xl hover:shadow-pink-400/30 hover:-translate-y-8 hover:-rotate-2 cursor-pointer overflow-hidden relative"
                 >
                   {/* Animated Background */}
                   <div
@@ -939,7 +1049,7 @@ export default function HomePage() {
                     </p>
                     <div className="flex items-center">
                       <div
-                        className={`w-14 h-14 bg-gradient-to-r ${testimonial.gradient} rounded-full flex items-center justify-center mr-4 group-hover:scale-150 group-hover:rotate-180 transition-all duration-700`}
+                        className={`w-14 h-14 bg-gradient-to-r ${testimonial.gradient} rounded-full flex items-center justify-center mr-4 group-hover:scale-150 group-hover:rotate-[360deg] transition-all duration-700`}
                       >
                         <span className="text-white font-bold text-lg">{testimonial.avatar}</span>
                       </div>
@@ -965,7 +1075,7 @@ export default function HomePage() {
         <div className="w-full flex items-center justify-center">
           <div className="w-full max-w-7xl px-6">
             <AnimatedCard>
-              <Card className="bg-gradient-to-r from-pink-400/20 via-rose-400/20 to-pink-500/20 border border-pink-400/30 backdrop-blur-xl hover:scale-105 transition-all duration-1000 hover:shadow-2xl hover:shadow-pink-400/50 group overflow-hidden relative">
+              <Card className="bg-gradient-to-r from-pink-400/20 via-rose-400/20 to-pink-500/20 border border-pink-400/30 hover:scale-105 transition-all duration-1000 hover:shadow-2xl hover:shadow-pink-400/50 group overflow-hidden relative">
                 {/* Animated Background */}
                 <div className="absolute inset-0 bg-gradient-to-r from-pink-400/10 to-rose-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
@@ -984,7 +1094,7 @@ export default function HomePage() {
                     <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto group-hover:text-gray-800 transition-colors duration-300">
                       Let's transform your blockchain vision into reality. Get a free consultation with our Web3 experts.
                     </p>
-                    <MagneticButton className="text-xl px-12 py-6">
+                    <MagneticButton className="text-xl px-12 py-6" onClick={scrollToContact}>
                       <Sparkles className="mr-2 h-6 w-6" />
                       Start Your Project
                     </MagneticButton>
@@ -1019,7 +1129,7 @@ export default function HomePage() {
             </AnimatedCard>
 
             <div className="max-w-2xl mx-auto">
-              <Card className="bg-white/60 border border-pink-200/50 backdrop-blur-xl">
+              <Card className="bg-white/60 border border-pink-200/50">
                 <CardContent className="p-8">
                   <form className="space-y-6">
                     <div className="space-y-4">
