@@ -489,7 +489,7 @@ export default function HomePage() {
             {/* Navigation */}
             <AnimatedCard direction="right">
               <nav className="hidden md:flex items-center space-x-8">
-                {["Work", "Services", "About", "Contact"].map((item, index) => (
+                {["Services", "Contact"].map((item, index) => (
                   <Link
                     key={item}
                     href={`#${item.toLowerCase()}`}
@@ -752,14 +752,15 @@ export default function HomePage() {
           <div className="w-full max-w-7xl px-6">
             <AnimatedCard>
               <div className="text-center mb-20">
-                <h2 className="text-5xl lg:text-6xl font-bold mb-6 text-center">
-                  <span className="bg-gradient-to-r from-gray-800 to-pink-600 bg-clip-text text-transparent">
-                    Choose Your
-                  </span>
-                  <br />
-                  <SakuraText className="bg-gradient-to-r from-pink-500 to-rose-500 bg-clip-text text-transparent">
-                    Development Path
-                  </SakuraText>
+                <h2 className="text-5xl lg:text-6xl font-bold mb-6">
+                  <div className="flex flex-col items-center">
+                    <span className="bg-gradient-to-r from-gray-800 to-pink-600 bg-clip-text text-transparent">
+                      Choose Your
+                    </span>
+                    <SakuraText className="bg-gradient-to-r from-pink-500 to-rose-500 bg-clip-text text-transparent">
+                      Development Path
+                    </SakuraText>
+                  </div>
                 </h2>
               </div>
             </AnimatedCard>
@@ -995,69 +996,113 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Footer */}
-      <section className="relative z-10 py-16 bg-white/50 border-t border-pink-200/50">
-        <div className="container mx-auto px-6">
-          <AnimatedCard>
-            <div className="grid md:grid-cols-4 gap-8 mb-8">
-              <div className="space-y-4">
-                <div className="flex items-center space-x-3 group">
-                  <div className="relative">
-                    <div className="w-10 h-10 bg-gradient-to-r from-pink-400 via-rose-400 to-pink-500 rounded-xl flex items-center justify-center group-hover:rotate-180 transition-transform duration-500">
-                      <span className="text-white font-bold text-lg">L</span>
-                    </div>
-                    <div className="absolute inset-0 bg-gradient-to-r from-pink-400 via-rose-400 to-pink-500 rounded-xl blur-lg opacity-50 group-hover:opacity-100 transition-opacity duration-300"></div>
+      {/* Contact Section */}
+      <section id="contact" className="relative z-10 py-20">
+        <div className="w-full flex items-center justify-center">
+          <div className="w-full max-w-7xl px-6">
+            <AnimatedCard>
+              <div className="text-center mb-16">
+                <h2 className="text-5xl lg:text-6xl font-bold mb-6">
+                  <div className="flex flex-col items-center">
+                    <span className="bg-gradient-to-r from-gray-800 to-pink-600 bg-clip-text text-transparent">
+                      Get in
+                    </span>
+                    <SakuraText className="bg-gradient-to-r from-pink-500 to-rose-500 bg-clip-text text-transparent">
+                      Touch
+                    </SakuraText>
                   </div>
-                  <SakuraText className="text-2xl font-bold bg-gradient-to-r from-gray-800 to-pink-600 bg-clip-text text-transparent">
-                    Labrys
-                  </SakuraText>
-                </div>
-                <p className="text-gray-600 hover:text-gray-800 transition-colors duration-300 text-center">
-                  Global blockchain development company delivering innovative Web3 solutions since 2017.
+                </h2>
+                <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+                  Drop us a line below and we'll get back to you as soon as possible.
                 </p>
               </div>
+            </AnimatedCard>
 
-              {[
-                {
-                  title: "Services",
-                  links: ["Smart Contract Development", "DeFi Development", "NFT Development"],
-                },
-                {
-                  title: "Company",
-                  links: ["About", "Careers", "Insights"],
-                },
-                {
-                  title: "Contact",
-                  links: ["Contact Us", "Support"],
-                },
-              ].map((section, index) => (
-                <div key={section.title} className="space-y-4">
-                  <h4 className="font-bold text-gray-800">{section.title}</h4>
-                  <div className="space-y-2">
-                    {section.links.map((link) => (
-                      <Link
-                        key={link}
-                        href="#"
-                        className="block text-gray-600 hover:text-pink-600 transition-all duration-300 hover:scale-105 hover:translate-x-2"
-                      >
-                        {link}
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              ))}
+            <div className="max-w-2xl mx-auto">
+              <Card className="bg-white/60 border border-pink-200/50 backdrop-blur-xl">
+                <CardContent className="p-8">
+                  <form className="space-y-6">
+                    <div className="space-y-4">
+                      <div>
+                        <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                          Name <span className="text-pink-500">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          id="name"
+                          required
+                          className="w-full px-4 py-2 rounded-lg border border-pink-200 focus:border-pink-400 focus:ring-2 focus:ring-pink-200 focus:outline-none transition-all duration-300"
+                          placeholder="Your name"
+                        />
+                      </div>
+                      <div>
+                        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                          Email <span className="text-pink-500">*</span>
+                        </label>
+                        <input
+                          type="email"
+                          id="email"
+                          required
+                          className="w-full px-4 py-2 rounded-lg border border-pink-200 focus:border-pink-400 focus:ring-2 focus:ring-pink-200 focus:outline-none transition-all duration-300"
+                          placeholder="your@email.com"
+                        />
+                      </div>
+                      <div>
+                        <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
+                          Phone
+                        </label>
+                        <input
+                          type="tel"
+                          id="phone"
+                          className="w-full px-4 py-2 rounded-lg border border-pink-200 focus:border-pink-400 focus:ring-2 focus:ring-pink-200 focus:outline-none transition-all duration-300"
+                          placeholder="Your phone number"
+                        />
+                      </div>
+                      <div>
+                        <label htmlFor="company" className="block text-sm font-medium text-gray-700 mb-1">
+                          Company <span className="text-pink-500">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          id="company"
+                          required
+                          className="w-full px-4 py-2 rounded-lg border border-pink-200 focus:border-pink-400 focus:ring-2 focus:ring-pink-200 focus:outline-none transition-all duration-300"
+                          placeholder="Your company name"
+                        />
+                      </div>
+                      <div>
+                        <label htmlFor="website" className="block text-sm font-medium text-gray-700 mb-1">
+                          Website
+                        </label>
+                        <input
+                          type="url"
+                          id="website"
+                          className="w-full px-4 py-2 rounded-lg border border-pink-200 focus:border-pink-400 focus:ring-2 focus:ring-pink-200 focus:outline-none transition-all duration-300"
+                          placeholder="https://your-website.com"
+                        />
+                      </div>
+                      <div>
+                        <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
+                          Message <span className="text-pink-500">*</span>
+                        </label>
+                        <textarea
+                          id="message"
+                          required
+                          rows={4}
+                          className="w-full px-4 py-2 rounded-lg border border-pink-200 focus:border-pink-400 focus:ring-2 focus:ring-pink-200 focus:outline-none transition-all duration-300"
+                          placeholder="Your message"
+                        ></textarea>
+                      </div>
+                    </div>
+                    <MagneticButton className="w-full">
+                      Submit
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </MagneticButton>
+                  </form>
+                </CardContent>
+              </Card>
             </div>
-
-            <div className="border-t border-pink-200/50 pt-8 text-center">
-              <p className="text-gray-600">
-                &copy; 2025 Labrys. All rights reserved.
-                <span className="bg-gradient-to-r from-pink-500 to-rose-500 bg-clip-text text-transparent font-semibold">
-                  {" "}
-                  Shaping the Decentralized Future
-                </span>
-              </p>
-            </div>
-          </AnimatedCard>
+          </div>
         </div>
       </section>
     </div>
