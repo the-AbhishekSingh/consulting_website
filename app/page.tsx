@@ -376,8 +376,8 @@ function StaggeredContainer({ children, className = "" }: { children: React.Reac
 
   return (
     <div ref={ref} className={className}>
-      {React.Children.map(children, (child, index) => (
-        <AnimatedCard delay={index * 200}>{child}</AnimatedCard>
+      {React.Children.map(children, (child) => (
+        <AnimatedCard delay={0}>{child}</AnimatedCard>
       ))}
     </div>
   )
@@ -637,12 +637,12 @@ export default function HomePage() {
                     BLOCKCHAIN
                   </span>
                 </TextReveal>
-                <TextReveal delay={300}>
+                <TextReveal delay={0}>
                   <SakuraText className="block bg-gradient-to-r from-pink-500 via-rose-500 to-pink-600 bg-clip-text text-transparent">
                     REVOLUTION
                   </SakuraText>
                 </TextReveal>
-                <TextReveal delay={600}>
+                <TextReveal delay={0}>
                   <span className="block text-gray-700 text-4xl lg:text-6xl font-normal">Starts Here</span>
                 </TextReveal>
               </h1>
